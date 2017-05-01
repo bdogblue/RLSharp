@@ -62,13 +62,6 @@ namespace RLSharp.Systems
                     _map.Rooms.Add(newRoom);
                 }
             }
-            // Iterate through each room that we wanted placed 
-            // call CreateRoom to make it
-            foreach (Rectangle room in _map.Rooms)
-            {
-                CreateRoom(room);
-                CreateDoors(room);
-            }
 
             // Iterate through each room that was generated
             // Don't do anything with the first room, so start at r = 1 instead of r = 0
@@ -91,6 +84,13 @@ namespace RLSharp.Systems
                     CreateVerticalTunnel(previousRoomCenterY, currentRoomCenterY, previousRoomCenterX);
                     CreateHorizontalTunnel(previousRoomCenterX, currentRoomCenterX, currentRoomCenterY);
                 }
+            }
+
+            // call CreateRoom to make it
+            foreach (Rectangle room in _map.Rooms)
+            {
+                CreateRoom(room);
+                CreateDoors(room);
             }
 
             PlacePlayer();
@@ -128,48 +128,6 @@ namespace RLSharp.Systems
             for (int y = Math.Min(yStart, yEnd); y <= Math.Max(yStart, yEnd); y++)
             {
                 _map.SetCellProperties(xPosition, y, true, true);
-            }
-        }
-
-        // Find the center of the first room that we created and place the Player there
-        private void PlacePlayer()
-        {
-            Player player = Game.Player;
-            if (player == null)
-            {
-                player = new Player();
-            }
-
-            player.X = _map.Rooms[0].Center.X;
-            player.Y = _map.Rooms[0].Center.Y;
-
-            _map.AddPlayer(player);
-        }
-        private void PlaceMonsters()
-        {
-            foreach (var room in _map.Rooms)
-            {
-                // Each room has a 60% chance of having monsters
-                if (Dice.Roll("1D10") < 7)
-                {
-                    // Generate between 1 and 4 monsters
-                    var numberOfMonsters = Dice.Roll("1D4");
-                    for (int i = 0; i < numberOfMonsters; i++)
-                    {
-                        // Find a random walkable location in the room to place the monster
-                        Point randomRoomLocation = _map.GetRandomWalkableLocationInRoom(room);
-                        // It's possible that the room doesn't have space to place a monster
-                        // In that case skip creating the monster
-                        if (randomRoomLocation != null)
-                        {
-                            // Temporarily hard code this monster to be created at level 1
-                            var monster = Kobold.Create(1);
-                            monster.X = randomRoomLocation.X;
-                            monster.Y = randomRoomLocation.Y;
-                            _map.AddMonster(monster);
-                        }
-                    }
-                }
             }
         }
 
@@ -243,6 +201,48 @@ namespace RLSharp.Systems
             }
 
             return false;
+        }
+
+        // Find the center of the first room that we created and place the Player there
+        private void PlacePlayer()
+        {
+            Player player = Game.Player;
+            if (player == null)
+            {
+                player = new Player();
+            }
+
+            player.X = _map.Rooms[0].Center.X;
+            player.Y = _map.Rooms[0].Center.Y;
+
+            _map.AddPlayer(player);
+        }
+        private void PlaceMonsters()
+        {
+            foreach (var room in _map.Rooms)
+            {
+                // Each room has a 60% chance of having monsters
+                if (Dice.Roll("1D10") < 7)
+                {
+                    // Generate between 1 and 4 monsters
+                    var numberOfMonsters = Dice.Roll("1D4");
+                    for (int i = 0; i < numberOfMonsters; i++)
+                    {
+                        // Find a random walkable location in the room to place the monster
+                        Point randomRoomLocation = _map.GetRandomWalkableLocationInRoom(room);
+                        // It's possible that the room doesn't have space to place a monster
+                        // In that case skip creating the monster
+                        if (randomRoomLocation != null)
+                        {
+                            // Temporarily hard code this monster to be created at level 1
+                            var monster = Kobold.Create(1);
+                            monster.X = randomRoomLocation.X;
+                            monster.Y = randomRoomLocation.Y;
+                            _map.AddMonster(monster);
+                        }
+                    }
+                }
+            }
         }
     }
 }
