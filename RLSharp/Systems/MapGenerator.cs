@@ -23,7 +23,7 @@ namespace RLSharp.Systems
         // Constructing a new MapGenerator requires the dimensions of the maps it will create
         // as well as the sizes and maximum number of rooms
         public MapGenerator(int width, int height,
-        int maxRooms, int roomMaxSize, int roomMinSize)
+        int maxRooms, int roomMaxSize, int roomMinSize, int mapLevel)
         {
             _width = width;
             _height = height;
@@ -93,6 +93,7 @@ namespace RLSharp.Systems
                 CreateDoors(room);
             }
 
+            CreateStairs();
             PlacePlayer();
             PlaceMonsters();
 
@@ -201,6 +202,22 @@ namespace RLSharp.Systems
             }
 
             return false;
+        }
+
+        private void CreateStairs()
+        {
+            _map.StairsUp = new Stairs
+            {
+                X = _map.Rooms.First().Center.X + 1,
+                Y = _map.Rooms.First().Center.Y,
+                IsUp = true
+            };
+            _map.StairsDown = new Stairs
+            {
+                X = _map.Rooms.Last().Center.X,
+                Y = _map.Rooms.Last().Center.Y,
+                IsUp = false
+            };
         }
 
         // Find the center of the first room that we created and place the Player there

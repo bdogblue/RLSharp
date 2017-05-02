@@ -47,6 +47,8 @@ namespace RLSharp.Core
 
         public static SchedulingSystem SchedulingSystem { get; private set; }
 
+        private static int _mapLevel = 1;
+
         public static void Main()
         {
             // This must be the exact name of the bitmap font file we are using or it will error.
@@ -57,7 +59,7 @@ namespace RLSharp.Core
             int seed = (int)DateTime.UtcNow.Ticks;
             Random = new DotNetRandom(seed);
             // The title will appear at the top of the console window
-            string consoleTitle = $"RougeSharp V3 Tutorial - Level 1 - Seed {seed}";
+            string consoleTitle = $"RougeSharp V3 Tutorial - Level {_mapLevel} - Seed {seed}";
 
             CommandSystem = new CommandSystem();
 
@@ -80,7 +82,7 @@ namespace RLSharp.Core
             _inventoryConsole.Print(1, 1, "Inventory", Colors.TextHeading);
 
             SchedulingSystem = new SchedulingSystem();
-            MapGenerator mapGenerator = new MapGenerator(_mapWidth, _mapHeight, 20, 13, 7);
+            MapGenerator mapGenerator = new MapGenerator(_mapWidth, _mapHeight, 20, 13, 7, _mapLevel);
             DungeonMap = mapGenerator.CreateMap();
             DungeonMap.UpdatePlayerFieldOfView();
             // Set up a handler for RLNET's Update event
@@ -120,6 +122,18 @@ namespace RLSharp.Core
                     else if (keyPress.Key == RLKey.Escape)
                     {
                         _rootConsole.Close();
+                    }
+                    else if (keyPress.Key == RLKey.Period)
+                    {
+                        if (DungeonMap.CanMoveDownToNextLevel())
+                        {
+                            MapGenerator mapGenerator = new MapGenerator(_mapWidth, _mapHeight, 20, 13, 7, ++_mapLevel);
+                            DungeonMap = mapGenerator.CreateMap();
+                            MessageLog = new MessageLog();
+                            CommandSystem = new CommandSystem();
+                            _rootConsole.Title = $"RougeSharp RLNet Tutorial - Level {_mapLevel}";
+                            didPlayerAct = true;
+                        }
                     }
                 }
 
