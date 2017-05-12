@@ -47,7 +47,7 @@ namespace RLSharp.Core
 
         public static SchedulingSystem SchedulingSystem { get; private set; }
 
-        private static int _mapLevel = 1;
+        public static int _mapLevel = 1;
 
         public static void Main()
         {
