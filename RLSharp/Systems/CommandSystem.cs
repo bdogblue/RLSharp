@@ -61,6 +61,22 @@ namespace RLSharp.Systems
             return false;
         }
 
+        public void PlayerWait()
+        {
+            int x = Game.Player.X;
+            int y = Game.Player.Y;
+
+            Game.DungeonMap.SetActorPosition(Game.Player, x, y);
+            
+
+            Monster monster = Game.DungeonMap.GetMonsterAt(x, y);
+
+            if (monster != null)
+            {
+                Attack(Game.Player, monster);
+            }
+        }
+
         public void Attack(Actor attacker, Actor defender)
         {
             StringBuilder attackMessage = new StringBuilder();

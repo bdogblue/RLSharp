@@ -7,7 +7,6 @@ using RogueSharp.DiceNotation;
 using RLSharp.Monsters;
 using System.Collections.Generic;
 
-
 namespace RLSharp.Systems
 {
     public class MapGenerator
@@ -242,7 +241,7 @@ namespace RLSharp.Systems
                 if (Dice.Roll("1D10") < 7)
                 {
                     // Generate between 1 and 4 monsters
-                    var numberOfMonsters = Dice.Roll("1D3");
+                    var numberOfMonsters = Dice.Roll("1D4");
                     for (int i = 0; i < numberOfMonsters; i++)
                     {
                         // Find a random walkable location in the room to place the monster
@@ -252,19 +251,17 @@ namespace RLSharp.Systems
                         if (randomRoomLocation != null)
                         {
                             // Temporarily hard code this monster to be created at level 1
-                            var monster = Kobold.Create(1);
-                            monster.X = randomRoomLocation.X;
-                            monster.Y = randomRoomLocation.Y;
-                            _map.AddMonster(monster);
+                            var kobold = Kobold.Create(1);
+                            kobold.X = randomRoomLocation.X;
+                            kobold.Y = randomRoomLocation.Y;
+                            _map.AddMonster(kobold);
+
+                            var goblin = Goblin.Create(2);
+                            goblin.X = randomRoomLocation.X;
+                            goblin.Y = randomRoomLocation.Y;
+                            _map.AddMonster(goblin);
                         }
-                        if (randomRoomLocation != null && Game._mapLevel == 2)
-                        {
-                            // Temporarily hard code this monster to be created at level 1
-                            var monster = Goblin.Create(1);
-                            monster.X = randomRoomLocation.X;
-                            monster.Y = randomRoomLocation.Y;
-                            _map.AddMonster(monster);
-                        }
+
                     }
                 }
             }

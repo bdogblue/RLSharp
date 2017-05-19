@@ -9,7 +9,7 @@ namespace RLSharp.Core
     {
         // IActor
 
-        private int _attack;
+        private int _attack; 
         private int _attackChance;
         private int _awareness;
         private int _defense;
@@ -19,6 +19,8 @@ namespace RLSharp.Core
         private int _maxHealth;
         private string _name;
         private int _speed;
+        private int _spawnChance;
+        private int _spawnLevel;
 
         public RLColor Color { get; set; }
         public char Symbol { get; set; }
@@ -164,6 +166,29 @@ namespace RLSharp.Core
             }
         }
 
+        public int SpawnChance
+        {
+            get
+            {
+                return _spawnChance;
+            }
+            set
+            {
+                _spawnChance = value;
+            }
+        }
+
+        public int SpawnLevel
+        {
+            get
+            {
+                return _spawnLevel;
+            }
+            set
+            {
+                _spawnLevel = value;
+            }
+        }
         // IScheduleable
         public int Time
         {

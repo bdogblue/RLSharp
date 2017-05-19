@@ -2,6 +2,8 @@
 using System;
 using RLSharp.Systems;
 using RLSharp.Behaviors;
+using System.Collections.Generic;
+using RLSharp.Monsters;
 
 namespace RLSharp.Core
 {

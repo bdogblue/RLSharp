@@ -135,6 +135,12 @@ namespace RLSharp.Core
                             didPlayerAct = true;
                         }
                     }
+                    else if (keyPress.Key == RLKey.W)
+                    {
+                        CommandSystem.PlayerWait();
+                        didPlayerAct = true;
+                        MessageLog.Add("Player Waited a Turn");
+                    }
                 }
 
                 if (didPlayerAct)

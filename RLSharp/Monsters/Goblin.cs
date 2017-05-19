@@ -21,7 +21,9 @@ namespace RLSharp.Monsters
                 MaxHealth = health,
                 Name = "Goblin",
                 Speed = 12,
-                Symbol = 'g'
+                Symbol = 'g',
+                SpawnChance = Dice.Roll("1D2"),
+                SpawnLevel = 2
             };
         }
     }

@@ -16,5 +16,7 @@ namespace RLSharp.Interfaces
         int MaxHealth { get; set; }
         string Name { get; set; }
         int Speed { get; set; }
+        int SpawnChance { get; set; }
+        int SpawnLevel { get; set; }
     }
 }

@@ -21,7 +21,9 @@ namespace RLSharp.Monsters
                 MaxHealth = health,
                 Name = "Kobold",
                 Speed = 14,
-                Symbol = 'k'
+                Symbol = 'k',
+                SpawnChance = Dice.Roll("1D4"),
+                SpawnLevel = 2
             };
         }
     }

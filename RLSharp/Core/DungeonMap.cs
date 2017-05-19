@@ -129,7 +129,7 @@ namespace RLSharp.Core
 
 
         public List<Rectangle> Rooms;
-        private readonly List<Monster> _monsters;
+        public readonly List<Monster> _monsters;
         public List<Door> Doors { get; set; }
         public Stairs StairsUp { get; set; }
         public Stairs StairsDown { get; set; }
